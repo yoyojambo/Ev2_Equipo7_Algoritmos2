@@ -39,12 +39,12 @@ jobs:
     - name: Run tests
       run: ctest --test-dir build
 
-    # Step 7: Generate coverage
-    - name: Generate coverage
-      run: |
-        lcov --capture --directory build --output-file coverage.info
-        lcov --remove coverage.info '/usr/*' '*/tests/*' --output-file coverage.info
-        lcov --list coverage.info
+    # # Step 7: Generate coverage
+    # - name: Generate coverage
+    #   run: |
+    #     lcov --capture --directory build --output-file coverage.info
+    #     lcov --remove coverage.info '/usr/*' '*/tests/*' --output-file coverage.info
+    #     lcov --list coverage.info
 
     # Step 8: Run SonarQube analysis
     - name: Run SonarQube analysis
@@ -59,4 +59,4 @@ jobs:
           -Dsonar.sources=src,app \
           -Dsonar.tests=tests \
           -Dsonar.cfamily.build-wrapper-output=build \
-          -Dsonar.cfamily.gcov.reportPaths=coverage.info
+          #-Dsonar.cfamily.gcov.reportPaths=coverage.info
