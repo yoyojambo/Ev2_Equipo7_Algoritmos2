@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  build-and-analyze:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -35,17 +35,27 @@ jobs:
     - name: Build with CMake
       run: cmake --build build --config Debug
 
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
     # Step 6: Run tests
     - name: Run tests
-      run: ctest --test-dir build
+      run: ctest --test-dir build/tests/
 
-    # # Step 7: Generate coverage
-    # - name: Generate coverage
-    #   run: |
-    #     lcov --capture --directory build --output-file coverage.info
-    #     lcov --remove coverage.info '/usr/*' '*/tests/*' --output-file coverage.info
-    #     lcov --list coverage.info
+    # Step 7: Generate coverage
+    - name: Generate coverage
+      run: |
+        lcov --ignore-errors source --capture --directory build --output-file coverage.info
+        lcov --remove coverage.info '/usr/*' '*/tests/*' --output-file coverage.info
+        lcov --list coverage.info
 
+  analyze:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
     # Step 8: Run SonarQube analysis
     - uses: sonarsource/sonarqube-scan-action@v3
       env:
