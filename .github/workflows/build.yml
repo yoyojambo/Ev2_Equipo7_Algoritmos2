@@ -43,7 +43,7 @@ jobs:
     - name: Generate coverage
       run: |
         lcov --ignore-errors source --capture --directory build --output-file coverage.info
-        lcov --remove coverage.info '/usr/*' '*/tests/*' --output-file coverage.info
+        lcov --remove coverage.info '/usr/*' '*/tests/*' '*/_deps/*' --output-file coverage.info
         lcov --list coverage.info
 
     # Step 8: Run SonarQube analysis
