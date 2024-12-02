@@ -49,5 +49,5 @@ jobs:
     # Step 8: Run SonarQube analysis
     - uses: sonarsource/sonarqube-scan-action@v3
       env:
-	SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-	SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
