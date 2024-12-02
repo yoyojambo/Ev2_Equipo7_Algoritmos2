@@ -27,8 +27,8 @@ jobs:
     - name: Install dependencies
       run: sudo apt-get update && sudo apt-get install -y build-essential lcov
 
-    # Step 4: Configure the build directory
-    - name: Configure CMake
+    # Step 4: Configure the build directory with Debug mode
+    - name: Configure CMake with Coverage
       run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
 
     # Step 5: Build the project
@@ -39,7 +39,7 @@ jobs:
     - name: Run tests
       run: ctest --test-dir build
 
-    # Step 7: Collect code coverage
+    # Step 7: Generate coverage
     - name: Generate coverage
       run: |
         lcov --capture --directory build --output-file coverage.info
