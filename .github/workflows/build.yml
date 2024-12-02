@@ -15,8 +15,11 @@ jobs:
     steps:
     # Step 1: Checkout the code
     - name: Checkout repository
-      uses: actions/checkout@v3
-
+      uses: actions/checkout@v4
+      with:
+        # Disabling shallow clones is recommended for improving the relevancy of reporting
+        fetch-depth: 0
+        
     # Step 2: Set up CMake environment
     - name: Set up CMake
       uses: jwlawson/actions-setup-cmake@v1
@@ -52,4 +55,4 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
       with:
-        args: -Dsonar.tests=tests -Dsonar.cfamily.build-wrapper-output=build -Dsonar.cfamily.gcov.reportPaths=coverage.info
+        args: -Dsonar.tests=tests -Dsonar.cfamily.build-wrapper-output=build -Dsonar.cfamily.gcov.reportPaths=coverage.info -Dsonar.sources=src,app
