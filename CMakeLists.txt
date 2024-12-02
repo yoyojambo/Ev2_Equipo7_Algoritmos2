@@ -18,4 +18,4 @@ add_subdirectory(app)
 
 # # Add the main executable
 # add_executable(main main.cpp)
-# target_link_libraries(main PRIVATE ford_fulkerson kruskal tsp)
+# target_link_libraries(main PRIVATE ford_fulkerson kruskal tsp lineal)

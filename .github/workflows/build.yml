@@ -48,15 +48,7 @@ jobs:
 
     # Step 8: Run SonarQube analysis
     - name: Run SonarQube analysis
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      run: |
-        sonar-scanner \
-          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
-          -Dsonar.projectKey=your_project_key \
-          -Dsonar.sources=src,app \
-          -Dsonar.tests=tests \
-          -Dsonar.cfamily.build-wrapper-output=build \
-          #-Dsonar.cfamily.gcov.reportPaths=coverage.info
+      uses: sonarsource/sonarqube-scan-action@v3
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}

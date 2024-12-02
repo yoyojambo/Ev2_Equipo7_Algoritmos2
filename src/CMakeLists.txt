@@ -6,3 +6,6 @@ target_include_directories(kruskal PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 add_library(tsp tsp.cpp)
 target_include_directories(tsp PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+add_library(lineal lineal.cpp)
+target_include_directories(lineal PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

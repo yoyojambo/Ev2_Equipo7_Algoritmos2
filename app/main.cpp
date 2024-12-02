@@ -1,18 +1,23 @@
 #include <iostream>
 #include <vector>
+#include <sstream>
 #include "kruskal.hpp"
 #include "tsp.hpp"
 #include "ford_fulkerson.hpp"
+#include "lineal.hpp"
 
 using namespace std;
 
+
 int main() {
+    string parentesis;
     int N;
     cin >> N;
 
     vector<vector<int>> distancias(N, vector<int>(N));
     vector<vector<int>> capacidades(N, vector<int>(N));
     vector<pair<int, int>> ubicaciones(N);
+    vector<pair<int, int>> centrales;
 
     for (int i = 0; i < N; ++i)
         for (int j = 0; j < N; ++j)
@@ -22,12 +27,26 @@ int main() {
         for (int j = 0; j < N; ++j)
             cin >> capacidades[i][j];
 
-    for (int i = 0; i < N; ++i)
-        cin >> ubicaciones[i].first >> ubicaciones[i].second;
+    for (int i = 0; i < N; ++i) {
+        string input;
+        cin >> input;
+        
+        int x, y;
+        std::stringstream ss(input.substr(1, input.size() - 2)); 
+        char comma;  
+        ss >> x >> comma >> y;
+        
+        ubicaciones[i] = make_pair(x, y);
+        centrales.emplace_back(x, y);
+    }
 
-    pair<int, int> nuevaCasa;
-    cin >> nuevaCasa.first >> nuevaCasa.second;
+    std::pair<int, int> nuevaCasa;
+    cin >> parentesis;
+    std::stringstream ssCasa(parentesis.substr(1, parentesis.size() - 2));
+    char commaCasa;
+    ssCasa >> nuevaCasa.first >> commaCasa >> nuevaCasa.second;
 
+    
     Graph g(N);
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < N; ++j) {
@@ -60,6 +79,11 @@ int main() {
     // Parte 3
     int flujoMaximo = fordFulkerson(capacidades, 0, N - 1);
     cout << flujoMaximo << endl;
+
+    // Parte 4
+    pair<int, int> centralCercana = encontrarCentralMasCercana(ubicaciones, nuevaCasa);
+    // Modified output format for coordinates
+    cout << "(" << centralCercana.first << ", " << centralCercana.second << ")" << endl;
 
     return 0;
 }
